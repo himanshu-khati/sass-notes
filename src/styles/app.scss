@@ -1,0 +1,83 @@
+@use "_colors2" as lol;
+@import "_colors";
+// Variables
+$color1: rgb(255, 255, 74);
+$color2: red;
+$large: 600px;
+// variable array
+$colors: red, yellow, green;
+
+.bodyDemo {
+  // using array
+  background-color: nth($colors, 2);
+  color: $color2;
+}
+
+// nesting in css
+.productCard > a {
+  color: blue;
+}
+
+// nesting in scss
+.productCard {
+  max-width: 600px;
+  background-color: $myRed; //from partials
+  border: 2px solid blueviolet;
+
+  //  a is direct children of productCard
+  > a {
+    background-color: lol.$myRed;
+  }
+
+  //  h2 might be children or grand children does't matter
+  h2 {
+    color: pink;
+  }
+}
+
+.custom {
+  background: lol.$myYellow;
+  height: 30px;
+  color: purple;
+}
+
+//! using % will not compile .custom class if not used
+%custom2 {
+  background: lol.$myYellow;
+  height: 30px;
+  color: purple;
+}
+
+//! mixin can be used as functions to reuse again
+@mixin customFunc($color: green, $bg: white) {
+  background: $bg;
+  height: 30px;
+  color: $color;
+}
+
+// this p will inherit .custom properties
+p {
+  @extend .custom;
+}
+
+.p1 {
+  @extend %custom2;
+}
+.p2 {
+  @extend %custom2;
+}
+
+// using mixin
+.p3 {
+  @include customFunc(red, black);
+}
+.p4 {
+  @include customFunc(lol.$myRed, lol.$myYellow);
+}
+.p5 {
+  @include customFunc;
+  width: 10px * 20; // operator
+  &:hover {
+    opacity: 0.7;
+  }
+}
